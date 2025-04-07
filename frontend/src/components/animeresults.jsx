@@ -75,6 +75,14 @@ export const AnimeResults = () => {
     enabled: !!query,
   });
 
+  // Sort the results to display the exact match first
+  const sortedResults = data?.results.sort((a, b) => {
+    if (a.title.toLowerCase() === query.toLowerCase()) return -1;  // Exact match comes first
+    if (b.title.toLowerCase() === query.toLowerCase()) return 1;   // Exact match comes first
+    if (a.score === "N/A" || b.score === "N/A") return 0;
+    return b.score - a.score; // Sort in descending order by score
+  });
+
   return (
     <Container maxW="1400px" my={4} pt={20}>
       {!query ? (
@@ -83,64 +91,37 @@ export const AnimeResults = () => {
         <>
           {isLoading && <Text textAlign="center">Loading...</Text>}
           {error && <Text textAlign="center" color="red.500">{error.message}</Text>}
-          {!isLoading && !error && data?.results.length === 0 && (
+          {!isLoading && !error && sortedResults?.length === 0 && (
             <Text textAlign="center">No results found for "{query}"</Text>
           )}
           <Flex wrap="wrap" gap={2} justify="center" mt={4}>
-            {data?.results.map((anime) => (
+            {sortedResults?.map((anime) => (
               <Flex
-                key={anime.unique_id}
-                direction="column"
-                align="center"
-                w="250px"
-                minH="400px"
-                p={3}
-                borderRadius="20px"
-                boxShadow="md"
-                border="2px solid"
-                borderColor="gray.700"
-                cursor="pointer"
-                onClick={() => setSelectedAnime(anime)} // Open popup when clicked
-                _hover={{ bg: "gray.700" }}
+                key={anime.unique_id} direction="column" align="center" w="250px" minH="400px"
+                p={3} borderRadius="20px" boxShadow="md" border="2px solid" borderColor="gray.700"
+                cursor="pointer" onClick={() => setSelectedAnime(anime)} _hover={{ bg: "gray.700" }}
               >
                 <Image
-                  src={anime.image_url}
-                  alt={anime.english_title}
-                  boxSize="250px"
-                  objectFit="cover"
-                  borderRadius="10px"
+                  src={anime.image_url} alt={anime.english_title} boxSize="250px"
+                  objectFit="cover" borderRadius="10px"
                 />
-                <Text fontSize="lg" textAlign="center" mt={2} color="blue.400">
-                  {anime.english_title}
-                </Text>
-                <Text fontSize="md" color="white" mt={1}>
-                  ⭐ {anime.score}
-                </Text>
-                <Text fontSize="md" color="white">
-                  {anime.type}
-                </Text>
+                <Text fontSize="lg" textAlign="center" mt={2} color="blue.400">{anime.english_title}</Text>
+                <Text fontSize="md" color="white" mt={1}>⭐ {anime.score}</Text>
+                <Text fontSize="md" color="white">{anime.type}</Text>
               </Flex>
             ))}
           </Flex>
 
-          {data?.results.length > 0 && (
+          {sortedResults?.length > 0 && (
             <Flex justify="center" mt={6} gap={4}>
-              <Button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} isDisabled={page === 1}>
-                Previous
-              </Button>
+              <Button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} isDisabled={page === 1}>Previous</Button>
               <Text fontSize="md">Page {page} of {data.totalPages}</Text>
-              <Button onClick={() => setPage((prev) => (prev < data.totalPages ? prev + 1 : prev))} isDisabled={page >= data.totalPages}>
-                Next
-              </Button>
+              <Button onClick={() => setPage((prev) => (prev < data.totalPages ? prev + 1 : prev))} isDisabled={page >= data.totalPages}>Next</Button>
             </Flex>
           )}
 
-          
           {selectedAnime && (
-            <AnimePopup 
-              anime={selectedAnime} 
-              closePopup={() => setSelectedAnime(null)}
-            />
+            <AnimePopup anime={selectedAnime} closePopup={() => setSelectedAnime(null)} />
           )}
         </>
       )}
