@@ -62,7 +62,7 @@ const AnimePopup = ({ anime, closePopup, popupRef }) => {
         ref={popupRef}
         position="fixed" top="50%" left="50%" transform="translate(-50%, -50%)" bg="gray.800"
         color="white" px={4} py={3} borderRadius="8px" boxShadow="lg" zIndex={1000}
-        minWidth="600px" minHeight="600px" textAlign="center"
+        minWidth="650px" minHeight="800px" textAlign="center"
         display="flex" flexDirection="column" justifyContent="center" alignItems="center" opacity={0.95}
       >
         <button
@@ -84,13 +84,13 @@ const AnimePopup = ({ anime, closePopup, popupRef }) => {
           <SingleStar anime={anime} addFavorite={addFavorite} />
         </Box>
 
-        <Box textAlign="center" marginTop="5px">
+        <Box textAlign="center" marginTop="10px" marginBottom="10px">
           <Text fontSize="lg" fontWeight="bold">{anime.title}</Text>
-          <Text fontSize="md" color="gold">⭐ Score: {anime.score}</Text>
-          <Text fontSize="md">📺 Episodes: {anime.episodes || "Unknown"}</Text>
-          <Text fontSize="lg" color={statusColor}>{anime.status || "Unknown"}</Text>
+          <Text fontSize="lg"  color="gold" fontFamily='sans-serif'>⭐ Score: {anime.score}</Text>
+          <Text fontSize="lg" fontFamily='sans-serif'>📺 Episodes: {anime.episodes || "Unknown"}</Text>
+          <Text fontSize="lg" fontFamily='sans-serif' color={statusColor}>{anime.status || "Unknown"}</Text>
 
-          <Box marginTop="5px" px={3} maxHeight="200px" maxWidth="600px" overflowY="auto"
+          <Box marginTop="25px" px={3} maxHeight="200px" maxWidth="600px" overflowY="auto"
             textAlign="justify" bg="gray.900" p={4} borderRadius="10px" border="2px solid" borderColor="#03a9fe"
           >
             <Text fontSize="md">

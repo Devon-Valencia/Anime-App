@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Box, Button, Flex, Input, VStack, Spinner,} from "@chakra-ui/react";
+import { Box, Button, Flex, Input, VStack, Spinner } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import genreList from "./genreList"; 
-
+import genreList from "./genreList";
 
 const typeList = [
   "TV", "OVA", "Movie", "Special", "Music", "Manga", "Novel", "One Shot"
@@ -69,7 +68,7 @@ export const Navbar = () => {
     } else if (filterBy === "type") {
       fetchTypeSuggestions(value);
     } else {
-      fetchAnimeSuggestions(value); 
+      fetchAnimeSuggestions(value);
     }
   };
 
@@ -77,7 +76,7 @@ export const Navbar = () => {
     if (e.key === "Enter" && query.trim()) {
       e.preventDefault();
       navigate(`/search?keyword=${query}&filter=${filterBy}`);
-      setSuggestions([]); 
+      setSuggestions([]);
     }
   };
 
@@ -86,10 +85,18 @@ export const Navbar = () => {
       <Flex align="left" direction="column" position="relative">
         <Input
           placeholder={`Search anime ${filterBy}...`}
-          value={query} onChange={handleInputChange} onKeyDown={handleKeyDown} width="420px"
-          backgroundColor="white" color="black" p={2} borderRadius={0}
+          value={query}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          width="420px"
+          backgroundColor="white"
+          color="black"
+          p={2}
+          borderRadius={0}
           _placeholder={{
-            color: "gray.500", fontFamily: "Montserrat", fontSize: "14px",
+            color: "gray.500",
+            fontFamily: "Montserrat",
+            fontSize: "14px",
           }}
         />
         {isLoading && (
@@ -99,13 +106,22 @@ export const Navbar = () => {
         )}
         {suggestions.length > 0 && (
           <Box
-            position="absolute" top="110%" width="420px"
-            backgroundColor="#0b1622" boxShadow="md" borderRadius="md" zIndex="20" mt={1}
+            position="absolute"
+            top="110%"
+            width="420px"
+            backgroundColor="#0b1622"
+            boxShadow="md"
+            borderRadius="md"
+            zIndex="20"
+            mt={1}
+            maxHeight="200px" // Shows ~5 items
+            overflowY="auto"  // Enables scroll
           >
             {suggestions.map((item) => (
               <Box
                 key={item.mal_id || item.name || item}
-                px={4} py={2}
+                px={4}
+                py={2}
                 _hover={{
                   backgroundColor: "rgba(21, 34, 50, 0.6)",
                   cursor: "pointer",
@@ -124,19 +140,34 @@ export const Navbar = () => {
       </Flex>
 
       <Box
-        position="absolute" top="50%"
-        left="90%" transform="translate(-50%, -50%)"
+        position="absolute"
+        top="50%"
+        left="90%"
+        transform="translate(-50%, -50%)"
       >
         <Button
-          variant="subtle" size="xs" borderRadius="5px"
-          _hover={{ color: "gray" }} onClick={() => setOpen(!isOpen)}
+          variant="subtle"
+          size="xs"
+          borderRadius="5px"
+          _hover={{ color: "gray" }}
+          onClick={() => setOpen(!isOpen)}
         >
           Filter
         </Button>
         {isOpen && (
           <VStack
-            position="absolute" left="57px" top="-5px" bg="rgba(27, 26, 26, 0.7)" backdropFilter="blur(10px)"
-            p={4} boxShadow="lg" borderRadius="4px" width="80px" zIndex="10" spacing={3} >
+            position="absolute"
+            left="57px"
+            top="-5px"
+            bg="rgba(27, 26, 26, 0.7)"
+            backdropFilter="blur(10px)"
+            p={4}
+            boxShadow="lg"
+            borderRadius="4px"
+            width="80px"
+            zIndex="10"
+            spacing={3}
+          >
             {["name", "genre", "type"].map((filter) => (
               <Button
                 key={filter}
@@ -145,8 +176,8 @@ export const Navbar = () => {
                 onClick={() => {
                   setFilterBy(filter);
                   setOpen(false);
-                  setQuery(""); 
-                  setSuggestions([]); 
+                  setQuery("");
+                  setSuggestions([]);
                 }}
               >
                 {filter.charAt(0).toUpperCase() + filter.slice(1)}

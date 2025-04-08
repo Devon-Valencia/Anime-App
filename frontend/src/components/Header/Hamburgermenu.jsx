@@ -21,16 +21,16 @@ function Hamburgermenu() {
             position="fixed" left="-10px" top="0px" bg="rgba(29, 29, 29, 0.6)" backdropFilter="blur(10px)" 
             p={4} boxShadow="lg" width="300px" height="100vh" zIndex="10"
           >
-            <Button variant="ghost" width="100%" onClick={() => setOpen(false)} fontSize={'14px'} fontFamily='Montserrat'  _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}>
+            <Button variant="ghost" width="100%" onClick={() => setOpen(false)} fontSize={'15px'} fontFamily='Montserrat'  _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}>
               {"<"}&nbsp;&nbsp;&nbsp;Close menu
             </Button>
-            <Button variant="ghost" width="100%" fontWeight="bold" onClick={() => { navigate("/"); setOpen(false); }} fontSize="14px" fontFamily="Montserrat"  _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}>
+            <Button variant="ghost" width="100%" fontWeight="bold" onClick={() => { navigate("/"); setOpen(false); }} fontSize="15px" fontFamily="Montserrat"  _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}>
               Home
             </Button>
-            <Button variant="ghost" width="100%" fontWeight={'bold'} onClick={() => { navigate("/about"); setOpen(false); }} fontSize={'14px'} fontFamily='Montserrat'  _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}>
+            <Button variant="ghost" width="100%" fontWeight={'bold'} onClick={() => { navigate("/about"); setOpen(false); }} fontSize={'15px'} fontFamily='Montserrat'  _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}>
               About
             </Button>
-            <Button variant="ghost" width="100%" fontWeight={'bold'} onClick={() => setOpen(false)} fontSize={'14px'} fontFamily='Montserrat'  _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}>
+            <Button variant="ghost" width="100%" fontWeight={'bold'} onClick={() => setOpen(false)} fontSize={'15px'} fontFamily='Montserrat'  _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}>
               Contact
             </Button>
           </VStack>
