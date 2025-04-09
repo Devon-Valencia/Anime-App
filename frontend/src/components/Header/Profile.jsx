@@ -1,99 +1,85 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Text } from '@chakra-ui/react';
+import { Box, Button, Text, Input } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import LoginPopup from '../LoginPopup';
 
 const Profile = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [username, setUsername] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedUsername = localStorage.getItem("username");
-    if (savedUsername) {
-      setUsername(savedUsername);
+    const img = localStorage.getItem("profileImage");
+    if (img) {
+      setProfileImage(img);
       setIsLoggedIn(true);
     }
   }, []);
 
-  const openLoginPopup = () => setIsOpen(true);
-  const closeLoginPopup = () => setIsOpen(false);
-
-  const handleLogin = (name) => {
-    if (name) {
-      setUsername(name);
-      setIsLoggedIn(true);
-      localStorage.setItem("username", name);
-      closeLoginPopup();
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file?.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result;
+        localStorage.setItem("profileImage", base64);
+        setProfileImage(base64);
+        setIsLoggedIn(true);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("username");
-    setUsername('');
+  const logout = () => {
+    localStorage.removeItem("profileImage");
+    setProfileImage(null);
     setIsLoggedIn(false);
     setIsMenuOpen(false);
   };
 
-  const openMenu = () => setIsMenuOpen(true);
-  const closeMenu = () => setIsMenuOpen(false);
-
   return (
     <>
-      {!isLoggedIn && (
-        <Box position="absolute" top="1rem" right="1rem">
-          <Button onClick={openLoginPopup} colorScheme="blue" size="sm">
-            Login
-          </Button>
+      {!isLoggedIn ? (
+        <Box pos="absolute" top="1rem" right="1rem">
+          <label htmlFor="upload">
+            <Box w="40px" h="40px" borderRadius="full" cursor="pointer" transition="transform 0.2s ease" _hover={{ transform: 'scale(1.15)'}}>
+              <img src="blankpfp.jpg" alt="Upload"  
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%', }}/>
+            </Box>
+          </label>
+          <Input id="upload" type="file" accept="image/*" display="none" onChange={handleImageUpload} />
         </Box>
-      )}
-
-      {isLoggedIn && (
-        <Box display="flex" justifyContent="flex-end">
+      ) : (
+        <Box pos="absolute" top="1rem" right="1rem">
           <img
-            src="/jinwoo.jpg"
+            src={profileImage}
             alt="Profile"
-            onClick={openMenu}
-            onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-            onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1.0)')}
-            style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '50%', cursor: 'pointer', transition: 'transform 0.3s ease', position: 'absolute', top: '1rem', right: '1rem' }}
+            onClick={() => setIsMenuOpen(true)}
+            style={{
+              width: 40, height: 40, borderRadius: "50%", objectFit: "cover",
+              cursor: "pointer", transition: "0.3s", transform: "scale(1)"
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
+            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
           />
         </Box>
       )}
 
       {isMenuOpen && (
-        <div onClick={closeMenu} style={{ position: 'fixed', top: '3rem', right: '-48.4rem', zIndex: 1000, width: '100%', height: '100vh' }}>
-          <div onClick={(e) => e.stopPropagation()} style={{ backgroundColor: '#1A1A1B', padding: '2rem', position: 'relative', width: '250px', textAlign: 'center', margin: '0 auto', top: '0%', height: 'auto' }}>
-            <button onClick={closeMenu} style={{ position: 'absolute', top: '10px', right: '15px', background: 'transparent', border: 'none', fontSize: '20px', cursor: 'pointer' }}>×</button>
+        <Box pos="fixed" top="3rem" right="0" w="100%" h="100vh" zIndex="1000" onClick={() => setIsMenuOpen(false)}>
+          <Box
+            bg="#1A1A1B" w="250px" p="1.5rem" pos="absolute" right="1rem" borderRadius="md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Button pos="absolute" top="10px" right="10px" variant="unstyled" fontSize="20px" onClick={() => setIsMenuOpen(false)}>×</Button>
+            <Text fontWeight="bold" fontSize="lg" color="#03a9fe" mb={4}>Welcome</Text>
 
-            <Text fontWeight="bold" fontSize="18px" fontFamily="Montserrat" justifyContent="flex-start" alignItems="left">
-              <span style={{ color: '#03a9fe' }}>{username || "Guest"}</span>
-            </Text>
-
-            <br />
-            
-            <Button variant="ghost" width="100%" fontWeight="bold" fontSize="14px" fontFamily="Montserrat" justifyContent="flex-start" textAlign="left" onClick={() => setIsMenuOpen(false)}>
-              Account Settings
-            </Button>
-
-            <br />
-
-            <Button variant="ghost" width="100%" fontWeight="bold" fontSize="14px" fontFamily="Montserrat" justifyContent="flex-start" onClick={() => { navigate("/favorites"); setIsMenuOpen(false); }}>
-              Favorites
-            </Button>
-
-            <br />
-
-            <Button colorScheme="red" variant="outline" width="100%" mt={4} fontWeight="bold" fontSize="14px" fontFamily="Montserrat" onClick={handleLogout}>
-              Logout
-            </Button>
-          </div>
-        </div>
+            <Button variant="ghost" w="100%" fontSize="sm" justifyContent="flex-start" onClick={() => setIsMenuOpen(false)}>Account Settings</Button>
+            <Button variant="ghost" w="100%" mt={2} fontSize="sm" justifyContent="flex-start" onClick={() => { navigate("/favorites"); setIsMenuOpen(false); }}>Favorites</Button>
+            <Button colorScheme="red" variant="outline" w="100%" mt={4} fontSize="sm" onClick={logout}>Logout</Button>
+          </Box>
+        </Box>
       )}
-
-      <LoginPopup isOpen={isOpen} onClose={closeLoginPopup} onLogin={handleLogin} />
     </>
   );
 };

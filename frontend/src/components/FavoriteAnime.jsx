@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 
 const FavoriteAnime = () => {
   const [favoriteAnime, setFavoriteAnime] = useState([]);
-  const [username, setUsername] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const savedUsername = localStorage.getItem("username") || "";
+    const savedProfileImage = localStorage.getItem("profileImage") || null;
     setFavoriteAnime(favorites);
-    setUsername(savedUsername);
+    setProfileImage(savedProfileImage);
   }, []);
 
   const removeFromFavorites = (indexToRemove) => {
@@ -19,148 +19,75 @@ const FavoriteAnime = () => {
 
   return (
     <div>
-      {/* Background Blur Banner */}
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "10%",
-          top: "7.5vh",  // Keep the banner at the top
-          left: "0",
-          zIndex: 1,
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundImage: "url('/idkk.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center 540px",
-            filter: "blur(10px)",
-            transform: "scale(1.05)",
-          }}
-        ></div>
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "10%",
-          top: "7.5vh",
-          left: 0,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 10,
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "35px",
-            marginBottom: "15px",
-            color: "white",
-            fontFamily:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif",
-            fontWeight: "600",
-          }}
-        >
-          <span style={{ color: "#03a9fe" }}>Hi,</span>
-          <span> {username || "Guest"} </span>
-        </h1>
+      <div style={{
+        position: "absolute", width: "100%", height: "18%", top: "7.5vh", left: 0, zIndex: 1, overflow: "hidden"
+      }}>
+        <div style={{
+          width: "100%", height: "150vh", backgroundImage: "url('/idkk.jpg')",
+          backgroundSize: "cover", backgroundPosition: "center 540px",
+          filter: "blur(10px)", transform: "scale(1.05)"
+        }} />
       </div>
 
-      <div style={{ paddingTop: "20%" }}>
+      <div style={{
+        position: "absolute", top: "7.5vh", width: "100%", height: "15%",
+        display: "flex", justifyContent: "center", alignItems: "center", zIndex: 10
+      }}>
+        <div style={{
+          display: "flex", alignItems: "center", gap: "12px", color: "white",
+          fontSize: "28px", fontWeight: "600"
+        }}>
+          {profileImage ? (
+            <img src={profileImage} alt="Profile" style={{
+              width: "75px", height: "75px", borderRadius: "50%", objectFit: "cover",
+              border: "2px solid #03a9fe"
+            }} />
+          ) : (
+            <span>Guest</span>
+          )}
+        </div>
+      </div>
+
+      <div style={{ paddingTop: "18%" }}>
         {favoriteAnime.length > 0 && (
-          <h2
-            style={{
-              position: "absolute",
-              top: "280px",
-              left: "300px",
-              transform: "translateX(-50%)",
-              fontSize: "35px",
-              fontWeight: "500",
-              padding: "20px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
+          <h2 style={{
+            textAlign: "center", fontSize: "26px", fontWeight: "500",
+            color: "white", marginBottom: "20px", display: "flex",
+            justifyContent: "center", alignItems: "center", gap: "8px"
+          }}>
             <span style={{ color: "#E91E63" }}>♥</span>
-            <span style={{ color: "#03a9fe" }}>Your </span>
-            <span>Favorite </span>
+            <span style={{ color: "#03a9fe" }}>Your</span>
+            <span>Favorite</span>
             <span style={{ color: "#03a9fe" }}>Anime</span>
           </h2>
         )}
 
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "20px",
-            justifyContent: "center",
-            padding: "0 10px",
-            width: "1750px",
-            zIndex: "10",
-          }}
-        >
+        <div style={{
+          display: "flex", flexWrap: "wrap", gap: "16px",
+          justifyContent: "center", padding: "0 10px", zIndex: 10
+        }}>
           {favoriteAnime.length > 0 ? (
             favoriteAnime.map((anime, index) => (
-              <div
-                key={index}
-                style={{
-                  marginBottom: "16px",
-                  padding: "12px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  width: "200px",
-                  height: "auto",
-                }}
-              >
-                <img
-                  src={anime.image_url}
-                  alt={anime.title}
-                  style={{
-                    width: "100%",
-                    height: "230px",
-                    objectFit: "cover",
-                    borderRadius: "10px",
-                  }}
-                />
-                <h3
-                  style={{
-                    marginTop: "8px",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    textAlign: "center",
-                  }}
-                >
+              <div key={index} style={{
+                position: "relative", background: "#121212aa", borderRadius: "10px",
+                padding: "10px", width: "180px", textAlign: "center"
+              }}>
+                <img src={anime.image_url} alt={anime.title} style={{
+                  width: "100%", height: "220px", objectFit: "cover", borderRadius: "8px"
+                }} />
+                <h3 style={{ margin: "8px 0 4px", fontSize: "16px", fontWeight: "bold", color: "#fff" }}>
                   {anime.title.length > 30 ? `${anime.title.slice(0, 22)}...` : anime.title}
                 </h3>
-                <p style={{ fontSize: "14px", color: "white", textAlign: "center" }}>
-                  ⭐ Score: {anime.score}
-                </p>
-                <p style={{ fontSize: "14px", color: "white", textAlign: "center" }}>
-                  📺 Episodes: {anime.episodes || "Unknown"}
-                </p>
-                <p style={{ fontSize: "14px", color: "white", textAlign: "center" }}>
-                  {anime.status || "Unknown"}
-                </p>
+                <p style={{ fontSize: "13px", color: "#ccc" }}>⭐ {anime.score}</p>
+                <p style={{ fontSize: "13px", color: "#ccc" }}>📺 {anime.episodes || "?"} eps</p>
+                <p style={{ fontSize: "13px", color: "#ccc" }}>{anime.status || "Unknown"}</p>
 
                 <button
                   onClick={() => removeFromFavorites(index)}
                   style={{
-                    position: "absolute",
-                    top: "15px",
-                    right: "15px",
-                    background: "transparent",
-                    border: "none",
-                    fontSize: "18px",
-                    color: "#888",
-                    cursor: "pointer",
+                    position: "absolute", top: "8px", right: "8px",
+                    background: "transparent", border: "none", color: "#ccc",
+                    fontSize: "16px", cursor: "pointer"
                   }}
                   title="Remove from favorites"
                 >
@@ -169,23 +96,9 @@ const FavoriteAnime = () => {
               </div>
             ))
           ) : (
-            <div
-              style={{
-                padding: "36px",
-                position: "fixed",
-                width: "100%",
-                height: "15%",
-                top: "30vh",
-                left: 0,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <p style={{ fontSize: "30px", color: "white" }}>
-                You have no favorite anime yet.
-              </p>
-            </div>
+            <p style={{ fontSize: "20px", color: "white", textAlign: "center", marginTop: "40px" }}>
+              You have no favorite anime yet.
+            </p>
           )}
         </div>
       </div>
