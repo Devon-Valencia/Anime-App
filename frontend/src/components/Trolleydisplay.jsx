@@ -5,29 +5,11 @@ import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 import '@splidejs/react-splide/css/skyblue';
 import AnimePopup from "./AnimePopup";
 
-const SingleStar = () => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  return (
-    <span
-      onClick={() => setIsClicked(!isClicked)}
-      style={{
-        position: "absolute", top: "-10px", right: "5px",
-        fontSize: "35px", color: isClicked ? "yellow" : "grey",
-        border: "5px", borderColor: isClicked ? "transparent" : "white",
-        cursor: "pointer", transition: "color 0.2s ease-in-out",
-      }}
-      title={isClicked ? "Unfavorite" : "Favorite"}
-    >
-      ★
-    </span>
-  );
-};
-
 const Trolleydisplay = () => {
   const [animeData, setAnimeData] = useState([]);
   const [secondAnimeData, setSecondAnimeData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [secondTrolleyLoading, setSecondTrolleyLoading] = useState(true); // New state for second trolley
   const [error, setError] = useState(false);
   const [selectedAnime, setSelectedAnime] = useState(null);
   const popupRef = useRef(null);
@@ -45,16 +27,27 @@ const Trolleydisplay = () => {
         if (!res1.ok || !res2.ok) throw new Error("Failed to fetch");
         const data1 = await res1.json();
         const data2 = await res2.json();
-        setAnimeData(data1);
-        setSecondAnimeData(data2);
+
+        setTimeout(() => {
+          setAnimeData(data1);
+          setSecondAnimeData(data2);
+          setLoading(false);
+
+          // After the first trolley is loaded, delay the second trolley rendering
+          setTimeout(() => {
+            setSecondTrolleyLoading(false); // Now the second trolley can render
+          }, 1000); // Wait for 1 second before rendering second trolley
+        }, 1000);
       })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 15000);
+    const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -87,17 +80,10 @@ const Trolleydisplay = () => {
         pagination: false,
         arrows: false,
         pauseOnHover: true,
-        autoScroll: { speed: 0.5 }
+        autoScroll: { speed: 0.2 }
       }}
       extensions={{ AutoScroll }}
     >
-      {loading && (
-        <Box width="150px">
-          <Spinner size="lg" />
-          <Text color="white">Loading...</Text>
-        </Box>
-      )}
-      {error && <Text color="red.500">Failed to load data</Text>}
       {data.map((anime, index) => (
         <SplideSlide key={index}>
           <Box
@@ -116,13 +102,12 @@ const Trolleydisplay = () => {
                 style={{ width: '200px', height: '275px', cursor: 'pointer' }}
                 onClick={(event) => handleAnimeClick(anime, event)}
               />
-              <SingleStar />
             </Box>
-            <Text fontWeight="bold" color="gray.300" textAlign="center">
-              {anime.title.length > 30 ? `${anime.title.slice(0, 20)}...` : anime.title}
+            <Text fontWeight="bold" color="white" textAlign="center" fontSize="lg">
+              {anime.title.length > 20 ? `${anime.title.slice(0, 20)}...` : anime.title}
             </Text>
-            <Text fontSize="sm" color="yellow.200">⭐ {anime.score}</Text>
-            <Text color="white">{anime.type}</Text>
+            <Text fontSize="md" fontWeight={"bold"} color="yellow.200">⭐ {anime.score}</Text>
+            <Text color="gray.300" fontWeight={"bold"} fontSize="md">{anime.type}</Text>
           </Box>
         </SplideSlide>
       ))}
@@ -137,37 +122,63 @@ const Trolleydisplay = () => {
         alignItems="center"
         py={6}
         gap={3}
-        mt="12vh"
+        mt="16vh"
         px={6}
         width="100%"
       >
-        <Text fontSize="3xl" fontWeight="bold" color="#03a9fe">
-          Random Animes
-        </Text>
-  
         <Box
+          position="relative"
+          width="100%"
+          maxWidth="1600px"
           display="flex"
           flexDirection="column"
           alignItems="center"
           gap={10}
-          width="100%"
-          maxWidth="1600px"
         >
-          <Box width="100%">
-            {renderTrolley(animeData)}
-          </Box>
-  
-          <Box width="100%">
-            {renderTrolley(secondAnimeData)}
-          </Box>
+          <Text
+            position="absolute"
+            top="-40px"
+            left="0px"
+            fontSize="3xl"
+            fontWeight="bold"
+            color="#03a9fe"
+            zIndex="1"
+          >
+            <span style={{ color: 'white' }}>Scroll &</span> Explore
+          </Text>
+
+          {loading ? (
+            <Box textAlign="center" mt={10}>
+              <Spinner size="xl" thickness="4px" speed="0.65s" color="blue.400" />
+              <Text mt={2} color="white">Refreshing anime list...</Text>
+            </Box>
+          ) : (
+            <>
+              <Box width="100%">
+                {renderTrolley(animeData)}
+              </Box>
+
+              {/* Only render the second trolley once it's not loading anymore */}
+              {secondTrolleyLoading ? (
+                <Box textAlign="center" mt={10}>
+                  <Spinner size="xl" thickness="4px" speed="0.65s" color="blue.400" />
+                  <Text mt={2} color="white">Loading second trolley...</Text>
+                </Box>
+              ) : (
+                <Box width="100%">
+                  {renderTrolley(secondAnimeData)}
+                </Box>
+              )}
+            </>
+          )}
         </Box>
       </Box>
-  
+
       {selectedAnime && (
         <AnimePopup anime={selectedAnime} closePopup={() => setSelectedAnime(null)} popupRef={popupRef} />
       )}
     </>
   );
-}
+};
 
 export default Trolleydisplay;

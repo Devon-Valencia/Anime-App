@@ -40,18 +40,19 @@ const FavoriteAnime = () => {
           {profileImage ? (
             <img src={profileImage} alt="Profile" style={{
               width: "75px", height: "75px", borderRadius: "50%", objectFit: "cover",
-              border: "2px solid #03a9fe"
             }} />
           ) : (
-            <span>Guest</span>
+            <img src="blankpfp.jpg" alt="Profile" style={{
+              width: "75px", height: "75px", borderRadius: "50%", objectFit: "cover",}}
+              />
           )}
         </div>
       </div>
 
-      <div style={{ paddingTop: "18%" }}>
+      <div style={{ paddingTop: "14%" }}>
         {favoriteAnime.length > 0 && (
           <h2 style={{
-            textAlign: "center", fontSize: "26px", fontWeight: "500",
+            textAlign: "center", fontSize: "40px", fontWeight: "500",
             color: "white", marginBottom: "20px", display: "flex",
             justifyContent: "center", alignItems: "center", gap: "8px"
           }}>
@@ -68,32 +69,33 @@ const FavoriteAnime = () => {
         }}>
           {favoriteAnime.length > 0 ? (
             favoriteAnime.map((anime, index) => (
-              <div key={index} style={{
-                position: "relative", background: "#121212aa", borderRadius: "10px",
-                padding: "10px", width: "180px", textAlign: "center"
-              }}>
-                <img src={anime.image_url} alt={anime.title} style={{
-                  width: "100%", height: "220px", objectFit: "cover", borderRadius: "8px"
-                }} />
-                <h3 style={{ margin: "8px 0 4px", fontSize: "16px", fontWeight: "bold", color: "#fff" }}>
-                  {anime.title.length > 30 ? `${anime.title.slice(0, 22)}...` : anime.title}
-                </h3>
-                <p style={{ fontSize: "13px", color: "#ccc" }}>⭐ {anime.score}</p>
-                <p style={{ fontSize: "13px", color: "#ccc" }}>📺 {anime.episodes || "?"} eps</p>
-                <p style={{ fontSize: "13px", color: "#ccc" }}>{anime.status || "Unknown"}</p>
-
-                <button
-                  onClick={() => removeFromFavorites(index)}
-                  style={{
-                    position: "absolute", top: "8px", right: "8px",
-                    background: "transparent", border: "none", color: "#ccc",
-                    fontSize: "16px", cursor: "pointer"
-                  }}
-                  title="Remove from favorites"
-                >
-                  ❌
-                </button>
-              </div>
+              anime && anime.image_url ? (
+                <div key={index} style={{
+                  position: "relative", background: "#121212aa", borderRadius: "10px",
+                  padding: "10px", width: "220px", height: "350px", textAlign: "center" 
+                }}>
+                  <img src={anime.image_url} alt={anime.title} style={{
+                    width: "100%", height: "220px", objectFit: "cover", borderRadius: "8px" 
+                  }} />
+                  <h3 style={{ margin: "8px 0 4px", fontSize: "16px", fontWeight: "bold", color: "#fff" }}>
+                    {anime.title.length > 30 ? `${anime.title.slice(0, 22)}...` : anime.title}
+                  </h3>
+                  <p style={{ fontSize: "13px", color: "#ccc" }}>⭐ {anime.score}</p>
+                  <p style={{ fontSize: "13px", color: "#ccc" }}>📺 {anime.episodes || "?"} eps</p>
+                  <p style={{ fontSize: "13px", color: "#ccc" }}>{anime.status || "Unknown"}</p>
+                  <button
+                    onClick={() => removeFromFavorites(index)}
+                    style={{
+                      position: "absolute", top: "12px", right: "12px",
+                      background: "transparent", border: "none", color: "#ccc",
+                      fontSize: "16px", cursor: "pointer",
+                    }}
+                    title="Remove from favorites"
+                  >
+                    ❌
+                  </button>
+                </div>
+              ) : null 
             ))
           ) : (
             <p style={{ fontSize: "20px", color: "white", textAlign: "center", marginTop: "40px" }}>

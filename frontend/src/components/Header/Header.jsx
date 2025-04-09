@@ -4,6 +4,7 @@ import { AniQuestHeader } from './AniQuestHeader';
 import { Navbar } from './Navbar';
 import Hamburgermenu from './Hamburgermenu';
 import Profile from './profile';
+import Contacts from './contacts';
 
 const Header = () => {
   return (
@@ -13,6 +14,7 @@ const Header = () => {
         <Hamburgermenu />
         <Navbar /> 
         <AniQuestHeader />
+        <Contacts />
     </Box>
   );
 };

@@ -14,13 +14,16 @@ const SingleStar = ({ anime, addFavorite }) => {
       as="span"
       onClick={handleStarClick}
       position="absolute"
-      top="10px"
-      right="10px"
-      fontSize="30px"
-      color={isClicked ? "yellow" : "gray"}
+      top="-10px"
+      right="5px"
+      fontSize="45px"
+      color={isClicked ? "yellow" : "white"}
       cursor="pointer"
       transition="color 0.2s ease-in-out"
       title={isClicked ? "Unfavorite" : "Favorite"}
+      textShadow="0 0 1px black, 1px 1px 1px black, -1px -1px 1px black"
+      _hover={{
+        transform: "scale(1.2)",}}
     >
       ★
     </Box>
@@ -84,11 +87,11 @@ const AnimePopup = ({ anime, closePopup, popupRef }) => {
           <SingleStar anime={anime} addFavorite={addFavorite} />
         </Box>
 
-        <Box textAlign="center" marginTop="10px" marginBottom="10px">
+        <Box textAlign="center" marginTop="10px" marginBottom="10px" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif">
           <Text fontSize="lg" fontWeight="bold">{anime.title}</Text>
-          <Text fontSize="lg"  color="gold" fontFamily='sans-serif'>⭐ Score: {anime.score}</Text>
-          <Text fontSize="lg" fontFamily='sans-serif'>📺 Episodes: {anime.episodes || "Unknown"}</Text>
-          <Text fontSize="lg" fontFamily='sans-serif' color={statusColor}>{anime.status || "Unknown"}</Text>
+          <Text fontSize="lg"  fontWeight="bold" color="gold" >⭐ Score: {anime.score}</Text>
+          <Text fontSize="lg" fontWeight="bold" >📺 Episodes: {anime.episodes || "Unknown"}</Text>
+          <Text fontSize="lg" fontWeight="bold" color={statusColor}>{anime.status || "Unknown"}</Text>
 
           <Box marginTop="25px" px={3} maxHeight="200px" maxWidth="600px" overflowY="auto"
             textAlign="justify" bg="gray.900" p={4} borderRadius="10px" border="2px solid" borderColor="#03a9fe"

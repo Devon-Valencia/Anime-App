@@ -5,7 +5,7 @@ import { Text } from "@chakra-ui/react";
 import Trolleydisplay from "./Trolleydisplay";
 import Header from "./Header/Header.jsx";
 import AboutAni from "./aboutAni.jsx";
-import FavoriteAnime from "./FavoriteAnime"; // Import the FavoriteAnime component
+import FavoriteAnime from "./FavoriteAnime"; 
 
 const Routing = () => {
   const [favoriteAnime, setFavoriteAnime] = useState([]);
