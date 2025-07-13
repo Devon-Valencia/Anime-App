@@ -4,7 +4,7 @@ from fetchers.fetch_by_genre import display_genre_results
 from fetchers.fetch_by_name import display_name_results
 from fetchers.fetch_by_type import display_type_data
 from fetchers.random_anime_generator import display_anime_on_page
-
+from fetchers.fetch_by_airing import display_airing_results
 
 app = Flask(__name__)
 CORS(app)
@@ -45,6 +45,14 @@ def get_anime_by_type():
     limit = request.args.get("limit", default=20, type=int)
     data = display_type_data(page, limit)
     return jsonify({"page": page, "anime": data})
+
+@app.route("/anime/airing", methods=["GET"])
+def get_airing_anime():
+    page = request.args.get("page", default=1, type=int)
+    limit = request.args.get("limit", default=20, type=int)
+    data = display_airing_results(page=page, limit=limit)
+    return jsonify({"page": page, "anime": data})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

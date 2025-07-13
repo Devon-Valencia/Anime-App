@@ -5,9 +5,9 @@ import random
 BASE_URL = 'https://api.jikan.moe/v4/anime'
 
 # Lambda function to randomize page number
-random_page = lambda min_page=1, max_page=10: random.randint(min_page, max_page)
+random_page = lambda min_page=1, max_page=50: random.randint(min_page, max_page)
 
-def fetch_random_anime_page(page=1, limit=35):
+def fetch_random_anime_page(page=1, limit=20):
     """
     Fetches a paginated list of anime for the homepage scrolling feature.
     """
@@ -25,7 +25,7 @@ def fetch_random_anime_page(page=1, limit=35):
         print(f"Invalid data format or empty list on page {page}.")
         return None
 
-def display_anime_on_page(limit=35):
+def display_anime_on_page(limit=20):
 
     page = random_page(1, 10)  # Call the lambda function to randomize the page between 1 and 10
     print(f"Fetching anime from page {page}...")
@@ -51,6 +51,6 @@ def display_anime_on_page(limit=35):
     return []
 
 # Call to get random anime data (passing limit argument only)
-def get_random_anime(limit=35):
+def get_random_anime(limit=20):
     data = display_anime_on_page(limit)
     return data

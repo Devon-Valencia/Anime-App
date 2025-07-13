@@ -2,7 +2,7 @@ import { Container, Flex, Image, Text, Button } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import AnimePopup from "./AnimePopup"; // Import AnimePopup
+import AnimePopup from "./AnimePopup";
 
 const fetchGenres = async () => {
   const response = await fetch("https://api.jikan.moe/v4/genres/anime");

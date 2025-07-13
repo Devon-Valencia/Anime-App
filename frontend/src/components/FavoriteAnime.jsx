@@ -20,7 +20,7 @@ const FavoriteAnime = () => {
   return (
     <div>
       <div style={{
-        position: "absolute", width: "100%", height: "18%", top: "7.5vh", left: 0, zIndex: 1, overflow: "hidden"
+        position: "absolute", width: "100%", height: "18%", top: "5rem", left: 0, zIndex: 1, overflow: "hidden"
       }}>
         <div style={{
           width: "100%", height: "150vh", backgroundImage: "url('/idkk.jpg')",
@@ -65,18 +65,28 @@ const FavoriteAnime = () => {
 
         <div style={{
           display: "flex", flexWrap: "wrap", gap: "16px",
-          justifyContent: "center", padding: "0 10px", zIndex: 10
+          justifyContent: "center", padding: "10px 10px", zIndex: 10
         }}>
           {favoriteAnime.length > 0 ? (
             favoriteAnime.map((anime, index) => (
               anime && anime.image_url ? (
-                <div key={index} style={{
-                  position: "relative", background: "#121212aa", borderRadius: "10px",
-                  padding: "10px", width: "220px", height: "350px", textAlign: "center" 
-                }}>
-                  <img src={anime.image_url} alt={anime.title} style={{
-                    width: "100%", height: "220px", objectFit: "cover", borderRadius: "8px" 
-                  }} />
+              <div key={index} style={{
+                position: "relative",
+                background: "#121212cc", 
+                borderRadius: "10px",
+                padding: "8px",
+                width: "100%",
+                maxWidth: "280px",
+                height: "auto",
+                textAlign: "center",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.5)",
+              }}>
+                <img src={anime.image_url} alt={anime.title} style={{
+                  width: "100%",
+                  height: "360px", 
+                  objectFit: "cover",
+                  borderRadius: "6px"
+                }} />
                   <h3 style={{ margin: "8px 0 4px", fontSize: "16px", fontWeight: "bold", color: "#fff" }}>
                     {anime.title.length > 30 ? `${anime.title.slice(0, 22)}...` : anime.title}
                   </h3>
@@ -88,7 +98,7 @@ const FavoriteAnime = () => {
                     style={{
                       position: "absolute", top: "12px", right: "12px",
                       background: "transparent", border: "none", color: "#ccc",
-                      fontSize: "16px", cursor: "pointer",
+                      fontSize: "18px", cursor: "pointer",
                     }}
                     title="Remove from favorites"
                   >

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import AnimeResults from "./animeresults.jsx";
-import { Text } from "@chakra-ui/react";
 import Trolleydisplay from "./Trolleydisplay";
 import Header from "./Header/Header.jsx";
 import AboutAni from "./aboutAni.jsx";
@@ -19,9 +18,14 @@ const Routing = () => {
       <Header />
       <Routes>
         <Route 
-          path="/" 
-          element={<Trolleydisplay />} 
+          path="/"  
+          element={
+            <>
+              <Trolleydisplay />
+            </>
+          } 
         />
+        
         <Route 
           path="/search" 
           element={<AnimeResults />} 

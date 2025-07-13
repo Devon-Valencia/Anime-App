@@ -81,18 +81,19 @@ export const Navbar = () => {
   };
 
   return (
-    <Box position="fixed" top=".5%" left="26.7%" p={3}>
-      <Flex align="left" direction="column" position="relative">
+    <Box>
+      <Flex direction="column" align="center" position="relative">
         <Input
-          placeholder={`Search anime ${filterBy}...`}
+          placeholder={`Search anime by ${filterBy}...`}
           value={query}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          width="420px"
-          backgroundColor="white"
-          color="black"
-          p={2}
+          width="100%"
           borderRadius={0}
+          backgroundColor="white"
+          border={"none"}
+          color="black"
+          p={3}
           _placeholder={{
             color: "gray.500",
             fontFamily: "Montserrat",
@@ -108,14 +109,14 @@ export const Navbar = () => {
           <Box
             position="absolute"
             top="110%"
-            width="420px"
-            backgroundColor="#0b1622"
+            width="100%"
+            bg="rgba(22, 25, 29, 0.93)" 
             boxShadow="md"
             borderRadius="md"
             zIndex="20"
             mt={1}
-            maxHeight="200px" // Shows ~5 items
-            overflowY="auto"  // Enables scroll
+            maxHeight="200px"
+            overflowY="auto"
           >
             {suggestions.map((item) => (
               <Box
@@ -139,12 +140,7 @@ export const Navbar = () => {
         )}
       </Flex>
 
-      <Box
-        position="absolute"
-        top="50%"
-        left="90%"
-        transform="translate(-50%, -50%)"
-      >
+      <Box position="absolute" top="50%" right="1" transform="translateY(-50%)">
         <Button
           variant="subtle"
           size="xs"
@@ -157,14 +153,14 @@ export const Navbar = () => {
         {isOpen && (
           <VStack
             position="absolute"
-            left="57px"
-            top="-5px"
+            left="40px"
+            top="20px"
             bg="rgba(27, 26, 26, 0.7)"
             backdropFilter="blur(10px)"
             p={4}
             boxShadow="lg"
             borderRadius="4px"
-            width="80px"
+            width="120px"
             zIndex="10"
             spacing={3}
           >
