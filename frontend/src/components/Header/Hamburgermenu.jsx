@@ -27,7 +27,7 @@ function Hamburgermenu() {
 
             <Button
               variant="ghost" width="100%" onClick={() => setOpen(false)} fontWeight="bold" fontSize={'16px'}
-              fontFamily='Montserrat' _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}
+              fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif" _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}
             >
               {"<"}&nbsp;<span style={{ color: '#03a9fe' }}>Close</span> menu
             </Button>
@@ -35,19 +35,19 @@ function Hamburgermenu() {
 
             <Button
               variant="ghost" width="100%" fontWeight="bold" onClick={() => { navigate("/"); setOpen(false); }}
-              fontSize="15px" fontFamily="Montserrat" _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}
+              fontSize="15px" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif" _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}
             >
               Home
             </Button>
             <Button
               variant="ghost" width="100%" fontWeight={'bold'} onClick={() => { navigate("/about"); setOpen(false); }}
-              fontSize={'15px'} fontFamily='Montserrat' _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}
+              fontSize={'15px'} fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif" _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}
             >
               About
             </Button>
             <Button
               variant="ghost" width="100%" fontWeight={'bold'} onClick={() => { navigate("/favorites"); setOpen(false); }}
-              fontSize={'15px'} fontFamily='Montserrat' _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}
+              fontSize={'15px'} fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif" _hover={{ bg: 'rgba(57, 56, 56, 0.6)' }}
             >
               Favorites
             </Button>
